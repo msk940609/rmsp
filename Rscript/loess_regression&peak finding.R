@@ -25,12 +25,11 @@ org=sp1
 org <- sp1$Intensity
 org_lm <- y.smooth
 a=dist(rbind(org, org_lm))
+a ##0.01
 
 re_spec=data.table(xp, y_pred)
 re_spec
 
-head(t1)
-head(t2)
 
 library(zoo)
 w=2
@@ -38,8 +37,6 @@ head(y.smooth)
 head(y.max)
 head(zoo(y.smooth))
 
-?zoo()
-?rollapply
 y.max <- rollapply(zoo(y.smooth), 2*w+1, max, align="center")
 x.max <- rollapply(zoo(x), 2*w+1, median, align="center")
 length(y.max)
@@ -111,17 +108,46 @@ for (i in 1:nrow(peak_point)) {
 df
 head(df)
 
-ggplot(df, aes(x=x, y=y, group=factor)) + 
-  geom_line()
+library(RColorBrewer)
+n <- 60
+qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+pie(rep(1,n), col=sample(col_vector, n))
+
+
+ggplot(df, aes(x=x, y=y, group=factor, col=as.factor(factor))) + 
+  geom_line()+
+  scale_color_manual(values = col_vector)
 
 
 head(df)
-
+?dcast
 df_d=dcast(df, x~as.factor(factor), value.var = "y",mean)
 df_d
 
 df_d$total=rowSums(df_d[,-1])
+df_d
 
 ggplot(df_d, aes(x=x, y=total)) + 
   geom_line()
 
+head(df_d)
+
+t1=as.data.table(df_d[,c("x", "total")])
+t1
+re_spec
+dim(t1)
+dim(re_spec)
+
+tt=cbind(t1, re_spec$y_pred)
+
+b=dist(rbind(tt$total, tt$V2))
+b ##0.25
+
+
+sp1
+sp2=fread("Datafile/ex_spectrum2.csv")
+
+
+c=dist(rbind(sp1$Intensity,sp2$Intensity))
+c
