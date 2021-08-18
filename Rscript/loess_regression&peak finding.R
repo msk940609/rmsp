@@ -8,16 +8,24 @@ y=sp1$Intensity
 plot(x, y, col = 'Gray', type = 'p', cex=0.5)
 lines(x, y, col = 'Gray')
 
+
 y.lm <- loess(y ~ x, span=0.03)
 y.smooth <- loess(y ~ x, span=0.03)$fitted
 
 plot(x, y.smooth, col = 'Gray', type = 'p')
 lines(x, y.smooth, col = 'Gray')
 
+
 xp=seq(round(min(x),0),round(max(x),0),0.1)
 y_pred=predict(y.lm,xp)
-plot(xp,y_pred, type='p', cex=0.2)
-lines(xp, y_pred, col = 'Gray')
+plot(x,y, type='p', cex=0.2)
+lines(x, y, col = 'red')
+lines(xp, y_pred, col = 'blue')
+
+
+sp1
+sp.smooth <- loess(sp1$Intensity ~ sp1$`Raman shift`, span=0.03,data = )
+
 
 sp1
 org=sp1
@@ -78,8 +86,9 @@ test <- function(w, span) {
 }
 
 test(2,0.03)
+test(1,0.03)
 
-w=2
+w=1
 span=0.03
 peaks <- argmax(x, y, w=w, span=span)
 peaks$y.hat
@@ -88,13 +97,14 @@ peak_point$V2=peak_point$V2+abs(min(peak_point$V2))
 peak_point
 
 
+
 library(broom)
 library(tidyverse)
 library(ggplot2)
 theme_set(theme_bw())
 # Create fake data
 
-res=15
+res=10
 df=data.frame()
 for (i in 1:nrow(peak_point)) {
   temp=as.data.frame(peak_point[i,])
@@ -109,27 +119,26 @@ df
 head(df)
 
 library(RColorBrewer)
-n <- 60
-qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
-pie(rep(1,n), col=sample(col_vector, n))
+#n <- 60
+#qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+#col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+#pie(rep(1,n), col=sample(col_vector, n))
 
 
 ggplot(df, aes(x=x, y=y, group=factor, col=as.factor(factor))) + 
   geom_line()+
   scale_color_manual(values = col_vector)
 
-
 head(df)
-?dcast
 df_d=dcast(df, x~as.factor(factor), value.var = "y",mean)
-df_d
 
 df_d$total=rowSums(df_d[,-1])
-df_d
 
 ggplot(df_d, aes(x=x, y=total)) + 
   geom_line()
+
+
+
 
 head(df_d)
 
@@ -150,4 +159,4 @@ sp2=fread("Datafile/ex_spectrum2.csv")
 
 
 c=dist(rbind(sp1$Intensity,sp2$Intensity))
-c
+
