@@ -8,24 +8,54 @@ y=sp1$Intensity
 plot(x, y, col = 'Gray', type = 'p', cex=0.5)
 lines(x, y, col = 'Gray')
 
+y
 
-y.lm <- loess(y ~ x, span=0.03)
+is.vector(x)
+
 y.smooth <- loess(y ~ x, span=0.03)$fitted
+
+dd=data.frame(x, y,y.lm$fitted)
+head(dd)
+
+
+y.lm <- stats::loess(y ~ x, span=0.03)
+
+
+y.smooth <- loess(y ~ x, span=0.03)$fitted
+tt
+tt <- loess.smooth(x,y, span = 0.03)
+plot(tt$x, tt$y, col = 'Gray', type = 'p')
+lines(tt$x, tt$y, col = 'Gray')
+
+model <- lm(formula = sp1$Intensity ~ sp1$`Raman shift`, data = sp1)
+t=loess.smooth(x,y,span = 0.03)
+t$x
+
+
+y2=model$fitted.values
+
 
 plot(x, y.smooth, col = 'Gray', type = 'p')
 lines(x, y.smooth, col = 'Gray')
+lines(x, y2, col = 'red')
+
+
+
+plot(tt$x, tt$y, col = 'Gray', type = 'p')
+lines(tt$x, tt$y, col = 'Gray')
 
 
 xp=seq(round(min(x),0),round(max(x),0),0.1)
 y_pred=predict(y.lm,xp)
+
 plot(x,y, type='p', cex=0.2)
 lines(x, y, col = 'red')
 lines(xp, y_pred, col = 'blue')
 
 
 sp1
-sp.smooth <- loess(sp1$Intensity ~ sp1$`Raman shift`, span=0.03,data = )
-
+sp.smooth <- loess(sp1$Intensity ~ sp1$`Raman shift`, span=0.03)
+sp.smooth$fitted
 
 sp1
 org=sp1
