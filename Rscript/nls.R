@@ -11,9 +11,9 @@ sp2=fread("Datafile/ex_spectrum2.csv")
 sp1
 
 ggplot()+
-  geom_point(data=sp1, aes(`Raman shift`, Intensity), col="red")+
+  geom_point(data=sp1, aes(`Raman shift`, Intensity), col="red")
   #geom_line(data=sp1, aes(`Raman shift`, Intensity), col="red")+
-  geom_point(data=sp2, aes(`Raman shift`, Intensity), col="blue")
+  #geom_point(data=sp2, aes(`Raman shift`, Intensity), col="blue")
   #geom_line(data=sp1, aes(`Raman shift`, Intensity), col="red")
 
 
