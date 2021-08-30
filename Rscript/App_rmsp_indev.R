@@ -18,7 +18,7 @@ Sys.setlocale("LC_TIME","english")
 
 urlfile<-'https://raw.githubusercontent.com/msk940609/rmsp/main/Datafile/ex_spectrum1.csv'
 
-ui <- fluidPage( theme=shinytheme("cerulean"), ##fluid page start
+ui <- fluidPage( ##fluid page start
   navbarPage( "MS test app" ,#navbar start
               tabPanel( "Regularize spectrum", ##tab panel start && name of first tap
                         sidebarLayout(       ##side bar design start
